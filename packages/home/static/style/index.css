@@ -1,0 +1,202 @@
+:root {
+    --gap: 1rem;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Architects Daughter', cursive;
+    display: grid;
+    grid-gap:  var(--gap);
+    margin: 0;
+    padding: var(--gap);
+    grid-template:
+        "header"min-content "main"auto "footer"min-content;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+h1 {
+    font-size: 3.5rem;
+}
+
+.layout-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding:  calc(var(--gap) * 1.5);
+}
+
+x-login {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.wc-module {
+    background-color: rgb(226, 226, 250)
+}
+
+.react-module {
+    background-color: rgb(226, 250, 226)
+}
+
+.vue-module {
+    background-color: rgb(250, 226, 226);
+
+}
+
+.order {
+    display: grid;
+    position: absolute;
+    top: calc(var(--gap) * 1.5);
+    bottom: calc(var(--gap) * 1.5);
+    grid-template-columns: 450px 400px;
+    column-gap: 50px;
+    row-gap: 15px;
+    grid-template-areas:    "head submit"
+                            "order extra";
+}
+
+.order-head {
+    grid-area: head;
+}
+
+.order-submit {
+    grid-area: submit;
+}
+
+.order-list {
+    grid-area: order;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.order-name {
+    width: 220px;
+}
+
+.order-price {
+    width: 50px;
+}
+
+.order-number {
+    width: 120px;
+}
+
+.order-number-input {
+    width: 25px;
+    height:  25px;
+    line-height: 25px;
+    text-align: center;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 1rem;
+}
+
+.order-extra  {
+    grid-area: extra;
+}
+
+.order-title-extra {
+    margin: 0;
+}
+
+.order-extra-item {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.order-shoppingcart {
+    width: 35px;
+    height: 35px;
+}
+
+.svelte-module {
+    background-color: rgb(250, 250, 226)
+}
+
+.catalogue {
+    display: grid;
+    grid-gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr) );
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.catalogue-item {
+    display: block;
+    height: 160px;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.layout-item {
+    display: block;
+    position: relative;
+    height: calc(100% - (2 * var(--gap)));
+    width: calc(100% - (2 * var(--gap)));
+    margin: 0;
+    padding: 0;
+    padding: var(--gap);
+}
+
+.catalogue-title {
+    margin: 0;
+    padding: 0;
+}
+
+.catalogue-description {
+    margin: 0;
+    padding: 0;
+}
+
+.catalogue-bar {
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    width: calc(100% - (2 * var(--gap)));
+    position: absolute;
+    bottom: 15px;
+}
+
+.pizza-ill {
+    float: right;
+    width: 55px;
+    height: 55px;
+}
+
+.catalogue-shoppingcart {
+    float: right;
+    width: 35px;
+    height: 35px;
+}
+
+.cart-ill {
+    color: rgb(179, 76, 139);
+    width: 20px;
+    height: 20px;
+}

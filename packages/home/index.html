@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tropical Pizzas</title>
+    <link rel="preload" href="./static/style/index.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Architects+Daughter&display=swap" as="font" crossorigin>
+    <link rel="preload" href="./static/scripts/vaadin-router.min.js" as="script" crossorigin>
+    <link rel="preload" href="./modules/header" as="script" crossorigin>
+    <link rel="prefetch" href="./modules/login" as="script" crossorigin>
+    <link rel="prefetch" href="./modules/profile" as="script" crossorigin>
+    <link rel="prefetch" href="./modules/order" as="script" crossorigin>
+    <link rel="prefetch" href="./modules/pizzamenu" as="script" crossorigin>
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter&display=swap" rel="stylesheet">
+    <link href="./static/style/index.css" rel="stylesheet">
+    <script async type="module" src="./modules/login"></script>
+    <script type="module">
+        import { SvelteHeader } from './modules/header';
+        class HeaderModule extends HTMLElement {
+            connectedCallback() {
+                const root = document.createElement('div');
+                root.classList.add('svelte-module');
+                this.appendChild(root);
+                SvelteHeader(root);
+            }
+        }
+        customElements.define('x-header', HeaderModule);
+    </script>
+    <script type="module">
+        class PizzaMenu extends HTMLElement {
+            connectedCallback() {
+                const root = document.createElement('section');
+                root.classList.add('react-module');
+                this.appendChild(root);
+                import('./modules/pizzamenu')
+                    .then((module) => {
+                        module.ReactApp(root);
+                    });
+            }
+        }
+        customElements.define('x-pizzamenu', PizzaMenu);
+    </script>
+    <script type="module">
+        class OrderPizza extends HTMLElement {
+            connectedCallback() {
+                const root = document.createElement('div');
+                this.appendChild(root);
+                import('./modules/order')
+                    .then((module) => {
+                        module.VueApp(root);
+                    });
+            }
+        }
+        customElements.define('x-orderpizza', OrderPizza);
+    </script>
+    <script type="module">
+        class Profile extends HTMLElement {
+            connectedCallback() {
+                const root = document.createElement('section')
+                root.classList.add('svelte-module');
+                this.appendChild(root);
+                import('./modules/profile')
+                    .then((module) => {
+                        module.SvelteApp(root);
+                    });
+            }
+        }
+        customElements.define('x-profile', Profile);
+    </script>
+</head>
+
+<body>
+    <header>
+        <x-header></x-header>
+    </header>
+    <main>
+
+    </main>
+    <footer>
+        <wired-card class="layout-container">
+            <img style="vertical-align: middle" src="/static/assets/restaurant_menu-24px.svg">
+            Contact us: support@tropicalpizzas.com
+            <span> # color legend: </span>
+            <wired-card> vanilla </wired-card>
+            <wired-card class="svelte-module"> svelte </wired-card>
+            <wired-card class="vue-module"> vue </wired-card>
+            <wired-card class="react-module"> react </wired-card>
+            <wired-card class="wc-module"> wc-libs </wired-card>
+        </wired-card>
+    </footer>
+
+    <script type="module">
+        import { Router } from './static/scripts/vaadin-router.min.js';
+        import { onKernelKey } from './modules/kernel';
+        const mainOutlet = document.querySelector('main');
+        const router = new Router(mainOutlet);
+        let hascustomerid = null;
+        const paths = {
+            '/pizzamenu': 'x-pizzamenu',
+            '/orderpizza': 'x-orderpizza',
+            '/profile': 'x-profile',
+        }
+
+        const guardPath = (context, commands) => {
+            if (hascustomerid !== null) {
+                return commands.component(paths[context.path]);
+            }else{
+                return commands.redirect('/')
+            }
+        };
+
+        router.setRoutes([
+            { path: '/', component: 'x-login' },
+            { path: '/pizzamenu', action: guardPath },
+            { path: '/orderpizza', action: guardPath },
+            { path: '/profile', action: guardPath }
+        ]);
+
+        onKernelKey('change:customerid', customerid => {
+            if (customerid != null) {
+                hascustomerid = customerid;
+                Router.go('/pizzamenu');
+            }
+        });
+    </script>
+    <!--script src="https://unpkg.com/wired-elements@latest/dist/wired-elements.bundled.js"></script-->
+</body>
+
+</html>
